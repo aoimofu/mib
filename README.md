@@ -12,14 +12,15 @@
 CPU全体についての値を取得する。Counter32形式なので変換が必要。
 |MIB|OID|Type|説明|
 |:-|:-|:-|:-|
-|ssCpuRawUser||Counter32|CPU Userの値のカウンタを取得する|
-|ssCpuRawNice||Counter32|CPU Niceの値のカウンタを取得する|
-|ssCpuRawSystem||Counter32|CPU Systemの値のカウンタを取得する|
-|ssCpuRawWait||Counter32|CPU IOWaitの値のカウンタを取得する|
-|ssCpuRawInterrupt||Counter32|CPU Interruptの値のカウンタを取得する|
-|ssCpuRawSoftIRQ||Counter32|CPU SoftIRQの値のカウンタを取得する|
-|ssCpuRawKernel||Counter32|CPU Kernelの値のカウンタを取得する|
-|ssCpuRawIdle||Counter32|CPU Idleの値のカウンタを取得する|
+|ssCpuRawUser|.1.3.6.1.4.1.2021.11.50|Counter32|CPU Userの値のカウンタを取得する|
+|ssCpuRawNice|.1.3.6.1.4.1.2021.11.51|Counter32|CPU Niceの値のカウンタを取得する|
+|ssCpuRawSystem|.1.3.6.1.4.1.2021.11.52|Counter32|CPU Systemの値のカウンタを取得する|
+|ssCpuRawWait|.1.3.6.1.4.1.2021.11.54|Counter32|CPU IOWaitの値のカウンタを取得する|
+|ssCpuRawInterrupt|.1.3.6.1.4.1.2021.11.56|Counter32|CPU Interruptの値のカウンタを取得する|
+|ssCpuRawSoftIRQ|.1.3.6.1.4.1.2021.11.61|Counter32|CPU SoftIRQの値のカウンタを取得する|
+|ssCpuRawKernel|.1.3.6.1.4.1.2021.11.55|Counter32|CPU Kernelの値のカウンタを取得する|
+|ssCpuRawIdle|.1.3.6.1.4.1.2021.11.53|Counter32|CPU Idleの値のカウンタを取得する|
+|ssCpuRawSteel|.1.3.6.1.4.1.2021.11.64|Counter32|CPU Steelの値のカウンタを取得する|
 
 ### Memory
 Memoryについての値を取得する。値はINTEGERでkBを表す
