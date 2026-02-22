@@ -27,6 +27,9 @@ Memoryについての値を取得する。値はINTEGERでkBを表す
 |:-|:-|:-|:-|
 |memTotalReal|.1.3.6.1.4.1.2021.4.5|INTEGER|物理メモリ総量|
 |memAvailReal|.1.3.6.1.4.1.2021.4.6|INTEGER|利用可能メモリ(cache, buffer含む)|
+|memBuffer|.1.3.6.1.4.1.2021.4.14|INTEGER|割り当て済みBuffer|
+|memCached|.1.3.6.1.4.1.2021.4.15|INTEGER|割り当て済みCache|
+|memShared|.1.3.6.1.4.1.2021.4.13|INTEGER|利用中Shared|
 |memUsedReal|.1.3.6.1.4.1.2021.4.7|INTEGER|使用中メモリ|
 |memTotalSwap|.1.3.6.1.4.1.2021.4.3|INTEGER|スワップメモリ総量|
 |memAvailSwap|.1.3.6.1.4.1.2021.4.4|INTEGER|利用可能スワップメモリ量|
