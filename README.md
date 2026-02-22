@@ -41,5 +41,5 @@ Memoryについての値を取得する。値はINTEGERでkBを表す
 個別CPUの使用率を取得する
 |MIB|OID|Type|説明|
 |:-|:-|:-|:-|
-|hrDeviceDescr.\<index\>||STRING|各論理CPUの名前を取得する|
-|hrProcessorLoad.\<index\>||INTENGER|各CPUの使用率(%)を取得する|
+|hrDeviceDescr.\<index\>|.1.3.6.1.2.1.25.3.2.1.3.\<index\>|OCTET STRING|各論理CPUの名前を取得する|
+|hrProcessorLoad.\<index\>|.1.3.6.1.2.1.25.3.2.1.2.\<index\>|INTEGER|各CPUの使用率(%)を取得する|
