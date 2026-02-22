@@ -71,6 +71,30 @@ Memoryについての値を取得する。値はINTEGERでkBを表す。
 |hrStorageSize|.1.3.6.1.2.1.25.2.3.1.5.\<index\>|INTEGER|ディスクのサイズ(割り当て単位数換算)|
 |hrStorageUsed|.1.3.6.1.2.1.25.2.3.1.6.\<index\>|INTEGER|ディスクの使用中サイズ(割り当て単位数換算)|
 
+# IF-MIB
+## 基本カウンタ
+|MIB|OID|Type|説明|
+|:-|:-|:-|:-|
+|ifIndex|.1.3.6.1.2.1.2.2.1.1.\<index\>|INTEGER|後述の\<index\>に使用するキー|
+|ifDescr|.1.3.6.1.2.1.2.2.1.2.\<index\>|OCTET STRING|IF名を表す|
+|ifName|.1.3.6.1.2.1.31.1.1.1.1.\<index\>|OCTET STRING|IF名を表す(推奨)|
+|ifInOctets|.1.3.6.1.2.1.2.2.1.10.\<index\>|Counter32|受信バイト|
+|ifOutOctets|.1.3.6.1.2.1.2.2.1.16.\<index\>|Counter32|送信バイト|
+
+## 1Gbps以上のNICで推奨のカウンタ
+Counter32では4.29GBまでしいか表せないためそれよりも大きな値を扱うために必要。
+対応するindexはifDescrと同じ。
+|MIB|OID|Type|説明|
+|:-|:-|:-|:-|
+|ifHCInOctets|.1.3.6.1.2.1.31.1.1.1.6.\<index\>|Counter64|受信バイト|
+|ifHCOutOctets|.1.3.6.1.2.1.31.1.1.1.10.\<index\>|Counter64|送信バイト|
+
+
+## トラフィック計算
+```
+bps = (ΔOctets * 8) / ΔTime
+```
+
 # 値の形式
 - INTEGER: 符号付整数 (−2,147,483,648 ～ 2,147,483,647)
   - その瞬間の値を記録
