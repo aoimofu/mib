@@ -48,6 +48,15 @@ Memoryについての値を取得する。値はINTEGERでkBを表す。
 |:-|:-|:-|:-|
 |laLoad.\<index\>|.1.3.6.1.4.1.2021.10.1.3.\<index\>|OCTET STRING|index 1, 2, 3がそれぞれ1分、5分、15分平均を表す|
 
+## 物理Disk別 I/O
+|MIB|OID|Type|説明|
+|:-|:-|:-|:-|
+|diskIODevice|.1.3.6.1.4.1.2021.13.15.1.1.\<index\>||物理デバイス名|
+|diskIONRead|.1.3.6.1.4.1.2021.13.15.1.2.\<index\>||読み込みI/O回数|
+|diskIONWritten|.1.3.6.1.4.1.2021.13.15.1.3.\<index\>||書き込みI/O回数|
+|diskIOReads|.1.3.6.1.4.1.2021.13.15.1.4.\<index\>||読み込みバイト数(kB)|
+|diskIOWrites|.1.3.6.1.4.1.2021.13.15.1.5.\<index\>||書き込みバイト数(kB)|
+
 ## Login
 |MIB|OID|Type|説明|
 |:-|:-|:-|:-|
