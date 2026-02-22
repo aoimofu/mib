@@ -42,6 +42,17 @@ Memoryについての値を取得する。値はINTEGERでkBを表す。
 |ssIORawReceived|1.3.6.1.4.1.2021.11.5.0|Counter32|ブロックリード回数|
 |ssIORawSent|1.3.6.1.4.1.2021.11.6.0|Counter32|ブロックライト回数|
 
+## Load Average
+値は小数点を表すため、型はOCTET STRINGとなっている。
+|MIB|OID|Type|説明|
+|:-|:-|:-|:-|
+|laLoad.\<index\>|.1.3.6.1.4.1.2021.10.1.3.\<index\>|OCTET STRING|index 1, 2, 3がそれぞれ1分、5分、15分平均を表す|
+
+## Login
+|MIB|OID|Type|説明|
+|:-|:-|:-|:-|
+|ssCpuNumUsers|.1.3.6.1.4.1.2021.11.9.0|INTEGER|ログイン中のユーザを表す|
+
 # ■ HOST-RESOURCES-MIB
 主にシステムの全体的な情報を取得することが出来る。
 
