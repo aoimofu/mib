@@ -1,0 +1,76 @@
+// ===== Dashboard: 使用量（RAM + SWAP, MB） =====
+
+// RAM Used/Total (MB)
+ram_total =
+  from(bucket: "telegraf")
+    |> range(start: -30m)
+    |> filter(fn: (r) => r._measurement == "snmp" and r.source == "${source}" and r._field == "memTotalReal")
+    |> keep(columns: ["_time","_value","source"])
+    |> rename(columns: {_value: "total_kb"})
+
+ram_avail =
+  from(bucket: "telegraf")
+    |> range(start: -30m)
+    |> filter(fn: (r) => r._measurement == "snmp" and r.source == "${source}" and r._field == "memAvailReal")
+    |> keep(columns: ["_time","_value","source"])
+    |> rename(columns: {_value: "avail_kb"})
+
+ram_join =
+  join(tables: {t: ram_total, a: ram_avail}, on: ["_time","source"])
+    |> map(fn: (r) => ({
+        r with
+        used_mb: (float(v: r.total_kb) - float(v: r.avail_kb)) / 1024.0,
+        total_mb: float(v: r.total_kb) / 1024.0
+    }))
+
+ram_used_mb =
+  ram_join
+    |> map(fn: (r) => ({ r with _value: r.used_mb, _field: "RAM Used (MB)" }))
+    |> keep(columns: ["_time","_value","_field","source"])
+
+ram_total_mb =
+  ram_join
+    |> map(fn: (r) => ({ r with _value: r.total_mb, _field: "RAM Total (MB)" }))
+    |> keep(columns: ["_time","_value","_field","source"])
+
+// SWAP Used/Total (MB)
+swap_total =
+  from(bucket: "telegraf")
+    |> range(start: -30m)
+    |> filter(fn: (r) => r._measurement == "snmp" and r.source == "${source}" and r._field == "memTotalSwap")
+    |> keep(columns: ["_time","_value","source"])
+    |> rename(columns: {_value: "total_kb"})
+
+swap_avail =
+  from(bucket: "telegraf")
+    |> range(start: -30m)
+    |> filter(fn: (r) => r._measurement == "snmp" and r.source == "${source}" and r._field == "memAvailSwap")
+    |> keep(columns: ["_time","_value","source"])
+    |> rename(columns: {_value: "avail_kb"})
+
+swap_join =
+  join(tables: {t: swap_total, a: swap_avail}, on: ["_time","source"])
+    |> map(fn: (r) => ({
+        r with
+        used_mb: (float(v: r.total_kb) - float(v: r.avail_kb)) / 1024.0,
+        total_mb: float(v: r.total_kb) / 1024.0
+    }))
+
+swap_used_mb =
+  swap_join
+    |> map(fn: (r) => ({ r with _value: r.used_mb, _field: "SWAP Used (MB)" }))
+    |> keep(columns: ["_time","_value","_field","source"])
+
+swap_total_mb =
+  swap_join
+    |> map(fn: (r) => ({ r with _value: r.total_mb, _field: "SWAP Total (MB)" }))
+    |> keep(columns: ["_time","_value","_field","source"])
+
+union(tables: [ram_used_mb, ram_total_mb, swap_used_mb, swap_total_mb])
+  |> group(columns: ["source","_field"])
+
+
+
+// Grafana設定
+- Unit: megabytes (自動でGBにも変換してくれる) 
+- Display Name: 空欄
