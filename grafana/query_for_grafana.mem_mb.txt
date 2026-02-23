@@ -2,14 +2,14 @@
 
 // RAM Used/Total (MB)
 ram_total =
-  from(bucket: "telegraf")
+  from(bucket: "<INFLUX_BUCKET>")
     |> range(start: -30m)
     |> filter(fn: (r) => r._measurement == "snmp" and r.source == "${source}" and r._field == "memTotalReal")
     |> keep(columns: ["_time","_value","source"])
     |> rename(columns: {_value: "total_kb"})
 
 ram_avail =
-  from(bucket: "telegraf")
+  from(bucket: "<INFLUX_BUCKET>")
     |> range(start: -30m)
     |> filter(fn: (r) => r._measurement == "snmp" and r.source == "${source}" and r._field == "memAvailReal")
     |> keep(columns: ["_time","_value","source"])
@@ -35,14 +35,14 @@ ram_total_mb =
 
 // SWAP Used/Total (MB)
 swap_total =
-  from(bucket: "telegraf")
+  from(bucket: "<INFLUX_BUCKET>")
     |> range(start: -30m)
     |> filter(fn: (r) => r._measurement == "snmp" and r.source == "${source}" and r._field == "memTotalSwap")
     |> keep(columns: ["_time","_value","source"])
     |> rename(columns: {_value: "total_kb"})
 
 swap_avail =
-  from(bucket: "telegraf")
+  from(bucket: "<INFLUX_BUCKET>")
     |> range(start: -30m)
     |> filter(fn: (r) => r._measurement == "snmp" and r.source == "${source}" and r._field == "memAvailSwap")
     |> keep(columns: ["_time","_value","source"])
