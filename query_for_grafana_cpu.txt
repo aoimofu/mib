@@ -1,20 +1,21 @@
 // Grafanaで使用できる、ssCpuRawの値を正規化するためのクエリ
+// 各CPUの値毎に表示する。
+// ${SOURCE}は `import "influxdata/influxdb/schema" schema.tagValues(bucket: "telegraf", tag: "source")` が定義されている。つまりIPアドレスで切り替えられる。
+
 raw =
   from(bucket: "<INFLUX_BUCKET>")
-    |> range(start: -10m)
+    |> range(start: -30m)
     |> filter(fn: (r) =>
       r._measurement == "snmp" and
       r.source == "${source}" and
       r._field =~ /^ssCpuRaw/
     )
-    // differenceは系列（= _field）単位で実行する必要がある
     |> group(columns: ["source", "_field"])
     |> difference(nonNegative: true)
-    |> keep(columns: ["_time","_value","_field","source","HOST_NAME"])
+    |> keep(columns: ["_time","_value","_field","source"])
 
 total =
   raw
-    // 同一時刻の全フィールド合計
     |> group(columns: ["source","_time"])
     |> sum(column: "_value")
     |> rename(columns: {_value: "total"})
@@ -23,8 +24,18 @@ total =
 join(tables: {r: raw, t: total}, on: ["_time","source"])
   |> map(fn: (r) => ({
       r with
-      _value: float(v: r._value) / float(v: r.total) * 100.0
+      _value: float(v: r._value) / float(v: r.total) * 100.0,
+      _field:
+        if r._field == "ssCpuRawUser" then "User"
+        else if r._field == "ssCpuRawSystem" then "System"
+        else if r._field == "ssCpuRawNice" then "Nice"
+        else if r._field == "ssCpuRawIdle" then "Idle"
+        else if r._field == "ssCpuRawWait" then "Wait"
+        else if r._field == "ssCpuRawInterrupt" then "IRQ"
+        else if r._field == "ssCpuRawSoftIRQ" then "SoftIRQ"
+        else if r._field == "ssCpuRawKernel" then "Kernel"
+        else if r._field == "ssCpuRawSteal" then "Steal"
+        else r._field
   }))
   |> drop(columns: ["total"])
-  // 表示用に系列を戻す
   |> group(columns: ["source","_field"])
