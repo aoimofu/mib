@@ -32,15 +32,15 @@ Memoryについての値を取得する。値はINTEGERでkBを表す。
 スワップの発生回数を記録する。
 |MIB|OID|Type|説明|
 |:-|:-|:-|:-|
-|ssSwapIn|1.3.6.1.4.1.2021.11.3.0|Counter32|ページイン回数|
-|ssSwapOut|1.3.6.1.4.1.2021.11.4.0|Counter32|ページアウト回数|
+|ssSwapIn|.1.3.6.1.4.1.2021.11.3|Counter32|ページイン回数|
+|ssSwapOut|.1.3.6.1.4.1.2021.11.4|Counter32|ページアウト回数|
 
 ## System I/O Activity (Storage)
 全ディスクの合算値である点に注意。
 |MIB|OID|Type|説明|
 |:-|:-|:-|:-|
-|ssIORawReceived|1.3.6.1.4.1.2021.11.5.0|Counter32|ブロックリード回数|
-|ssIORawSent|1.3.6.1.4.1.2021.11.6.0|Counter32|ブロックライト回数|
+|ssIORawReceived|.1.3.6.1.4.1.2021.11.58|Counter32|ブロックリード回数|
+|ssIORawSent|.1.3.6.1.4.1.2021.11.57|Counter32|ブロックライト回数|
 
 ## Load Average
 値は小数点を表すため、型はOCTET STRINGとなっている。
