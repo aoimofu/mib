@@ -62,7 +62,7 @@ Memoryについての値を取得する。値はINTEGERでkBを表す。
 ## Login
 |MIB|OID|Type|説明|
 |:-|:-|:-|:-|
-|ssCpuNumUsers|.1.3.6.1.4.1.2021.11.9.0|INTEGER|ログイン中のユーザを表す|
+|ssCpuUser|.1.3.6.1.4.1.2021.11.9|INTEGER|ログイン中のユーザを表す|
 
 # ■ HOST-RESOURCES-MIB
 主にシステムの全体的な情報を取得することが出来る。
