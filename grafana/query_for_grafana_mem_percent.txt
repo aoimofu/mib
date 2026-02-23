@@ -1,0 +1,69 @@
+// ===== Dashboard: 使用率（RAM + SWAP） =====
+
+// RAM %
+ram_total =
+  from(bucket: "<INFLUX_BUCKET>")
+    |> range(start: -30m)
+    |> filter(fn: (r) =>
+      r._measurement == "snmp" and
+      r.source == "${source}" and
+      r._field == "memTotalReal"
+    )
+    |> keep(columns: ["_time","_value","source"])
+    |> rename(columns: {_value: "total_kb"})
+
+ram_avail =
+  from(bucket: "<INFLUX_BUCKET>")
+    |> range(start: -30m)
+    |> filter(fn: (r) =>
+      r._measurement == "snmp" and
+      r.source == "${source}" and
+      r._field == "memAvailReal"
+    )
+    |> keep(columns: ["_time","_value","source"])
+    |> rename(columns: {_value: "avail_kb"})
+
+ram_pct =
+  join(tables: {t: ram_total, a: ram_avail}, on: ["_time","source"])
+    |> map(fn: (r) => ({
+        r with
+        _value: (float(v: r.total_kb) - float(v: r.avail_kb)) / float(v: r.total_kb) * 100.0,
+        _field: "RAM Used"
+    }))
+    |> keep(columns: ["_time","_value","_field"])
+
+// SWAP %
+swap_total =
+  from(bucket: "<INFLUX_BUCKET>")
+    |> range(start: -30m)
+    |> filter(fn: (r) =>
+      r._measurement == "snmp" and
+      r.source == "${source}" and
+      r._field == "memTotalSwap"
+    )
+    |> keep(columns: ["_time","_value","source"])
+    |> rename(columns: {_value: "total_kb"})
+
+swap_avail =
+  from(bucket: "<INFLUX_BUCKET>")
+    |> range(start: -30m)
+    |> filter(fn: (r) =>
+      r._measurement == "snmp" and
+      r.source == "${source}" and
+      r._field == "memAvailSwap"
+    )
+    |> keep(columns: ["_time","_value","source"])
+    |> rename(columns: {_value: "avail_kb"})
+
+swap_pct =
+  join(tables: {t: swap_total, a: swap_avail}, on: ["_time","source"])
+    |> map(fn: (r) => ({
+        r with
+        _value: (float(v: r.total_kb) - float(v: r.avail_kb)) / float(v: r.total_kb) * 100.0,
+        _field: "SWAP Used"
+    }))
+    |> keep(columns: ["_time","_value","_field"])
+
+// Output (remove source/IP from legend by grouping only by _field)
+union(tables: [ram_pct, swap_pct])
+  |> group(columns: ["_field"])
