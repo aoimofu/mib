@@ -23,10 +23,10 @@ Memoryについての値を取得する。値はINTEGERでkBを表す。
 |memBuffer|.1.3.6.1.4.1.2021.4.14|INTEGER|割り当て済みBuffer|
 |memCached|.1.3.6.1.4.1.2021.4.15|INTEGER|割り当て済みCache|
 |memShared|.1.3.6.1.4.1.2021.4.13|INTEGER|利用中Shared|
-|memUsedReal|.1.3.6.1.4.1.2021.4.7|INTEGER|使用中メモリ|
+|memUsedRealTXT|.1.3.6.1.4.1.2021.4.17|INTEGER|使用中メモリ|
 |memTotalSwap|.1.3.6.1.4.1.2021.4.3|INTEGER|スワップメモリ総量|
 |memAvailSwap|.1.3.6.1.4.1.2021.4.4|INTEGER|利用可能スワップメモリ量|
-|memUsedSwap|.1.3.6.1.4.1.2021.4.8|INTEGER|使用中スワップメモリ量|
+|memUsedSwapTXT|.1.3.6.1.4.1.2021.4.16|INTEGER|使用中スワップメモリ量|
 
 ## Swap I/O Activity (Storage)
 スワップの発生回数を記録する。
