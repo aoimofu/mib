@@ -159,3 +159,19 @@ snmptranslate -m +UCD-SNMP-MIB .1.3.6.1.4.1.2021.4.5
 
 # 参考
 - [RedHat 21.7 Net-SNMPを使用したパフォーマンスのモニタリング](https://docs.redhat.com/ja/documentation/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-system_monitoring_tools-net-snmp)
+
+# ■ telegrafとinputs.snmp
+telegrafから対象ホストへ`inputs.snmp`プラグインでデータの取得を行える。  
+下記に仕様を記載。
+
+## トップレベル
+|キー名|説明|例|
+|:-|:-|:-|
+|agents|取得先の指定|`"udp://192.168.1.10"`|
+|version|使用するsnmpバージョン|2|3|
+|community|コミュニティ文字列|`${SNMP_COMMUNITY}`|
+|timeout|タイムアウトまでの時間|`"5s"`|
+|retries|再試行回数|2|
+|path|MIBへのパス|`"/usr/share/snmp/mibs"`|
+|name|メトリクス名|"cpu_usage"|
+|interval|取得間隔|`"30s"`|
