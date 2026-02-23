@@ -86,7 +86,7 @@ Memoryについての値を取得する。値はINTEGERでkBを表す。
 ## 基本カウンタ
 |MIB|OID|Type|説明|
 |:-|:-|:-|:-|
-|ifIndex|.1.3.6.1.2.1.2.2.1.1.\<index\>|INTEGER|後述の\<index\>に使用するキー|
+|ifIndex|.1.3.6.1.2.1.2.2.1.1|INTEGER|後述の\<index\>に使用するキーの一覧を取得|
 |ifDescr|.1.3.6.1.2.1.2.2.1.2.\<index\>|OCTET STRING|IF名を表す|
 |ifName|.1.3.6.1.2.1.31.1.1.1.1.\<index\>|OCTET STRING|IF名を表す(推奨)|
 |ifInOctets|.1.3.6.1.2.1.2.2.1.10.\<index\>|Counter32|受信バイト|
