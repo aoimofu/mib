@@ -113,6 +113,28 @@ bps = (ΔOctets * 8) / ΔTime
   - トラフィック量をなど差分を取ってレートを計算する用途
  
 # ■ snmpコマンドによるMIBとOIDの確認方法
+## MIBの読み込み設定を行う
+### /etc/snmp/snmp.conf
+下記を追記する。
+```
+mibs ALL
+mibdirs /usr/share/snmp/mibs:/usr/share/snmp/mibs/iana:/usr/share/snmp/mibs/ietf
+```
+
+### 環境変数
+MIBの参照先が/etc/snmp/snmp.confを上書きするようなので、もしうまく動かなかったり変な環境変数が設定されていたら修正する。
+```bash
+export MIBS=ALL
+export MIBDIRS=/usr/share/snmp/mibs:/usr/share/snmp/mibs/iana:/usr/share/snmp/mibs/ietf:/opt/mibs
+```
+
+### コマンドライン指定が一番強い
+コマンドラインで指定すれば上記の設定に優先してMIBを検索できる。
+```bash
+snmptranslate -M /path/to/mibs -m +UCD-SNMP-MIB memTotalReal
+```
+
+## MIBからOIDを解決する方法
 本当にMIBとOIDの対応は正しいのか検証するための確認方法。
 ```bash
 snmptranslate -On -m +UCD-SNMP-MIB -IR memTotalReal
@@ -127,7 +149,7 @@ snmptranslate -On -m +UCD-SNMP-MIB -IR memTotalReal
   - `-I` ... 入力のパースを制御するオプション
   - `R` ... OIDラベルへアクセスする。（つまりMIBへアクセスする）
 
-### OIDからMIB名を解決する方法
+### OIDからMIBを解決する方法
 ```bash
 snmptranslate -m +UCD-SNMP-MIB .1.3.6.1.4.1.2021.4.5
 ```
