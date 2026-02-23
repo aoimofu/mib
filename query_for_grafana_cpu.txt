@@ -1,0 +1,30 @@
+// Grafanaで使用できる、ssCpuRawの値を正規化するためのクエリ
+raw =
+  from(bucket: "<INFLUX_BUCKET>")
+    |> range(start: -10m)
+    |> filter(fn: (r) =>
+      r._measurement == "snmp" and
+      r.source == "${source}" and
+      r._field =~ /^ssCpuRaw/
+    )
+    // differenceは系列（= _field）単位で実行する必要がある
+    |> group(columns: ["source", "_field"])
+    |> difference(nonNegative: true)
+    |> keep(columns: ["_time","_value","_field","source","HOST_NAME"])
+
+total =
+  raw
+    // 同一時刻の全フィールド合計
+    |> group(columns: ["source","_time"])
+    |> sum(column: "_value")
+    |> rename(columns: {_value: "total"})
+    |> keep(columns: ["_time","source","total"])
+
+join(tables: {r: raw, t: total}, on: ["_time","source"])
+  |> map(fn: (r) => ({
+      r with
+      _value: float(v: r._value) / float(v: r.total) * 100.0
+  }))
+  |> drop(columns: ["total"])
+  // 表示用に系列を戻す
+  |> group(columns: ["source","_field"])
