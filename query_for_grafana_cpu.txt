@@ -1,5 +1,5 @@
 // Grafanaで使用できる、ssCpuRawの値を正規化するためのクエリ
-// 各CPUの値毎に表示する。
+// 対象ホストのCPU使用状況を表示する。
 // ${SOURCE}は `import "influxdata/influxdb/schema" schema.tagValues(bucket: "telegraf", tag: "source")` が定義されている。つまりIPアドレスで切り替えられる。
 
 raw =
