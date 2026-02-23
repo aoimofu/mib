@@ -71,7 +71,7 @@ Memoryについての値を取得する。値はINTEGERでkBを表す。
 |MIB|OID|Type|説明|
 |:-|:-|:-|:-|
 |hrDeviceDescr.\<index\>|.1.3.6.1.2.1.25.3.2.1.3.\<index\>|OCTET STRING|各論理CPUの名前を取得する|
-|hrProcessorLoad.\<index\>|.1.3.6.1.2.1.25.3.2.1.2.\<index\>|INTEGER|各CPUの使用率(%)を取得する|
+|hrProcessorLoad.\<index\>|.1.3.6.1.2.1.25.3.3.1.2.\<index\>|INTEGER|各CPUの使用率(%)を取得する|
 
 ## FileSystem Usage
 |MIB|OID|Type|説明|
