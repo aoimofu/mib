@@ -112,7 +112,7 @@ bps = (ΔOctets * 8) / ΔTime
  
 # ■ snmpコマンドによるMIBとOIDの確認方法
 本当にMIBとOIDの対応は正しいのか検証するための確認方法。
-```
+```bash
 snmptranslate -On -m +UCD-SNMP-MIB -IR memTotalReal
 ```
 - `-On`
@@ -122,9 +122,13 @@ snmptranslate -On -m +UCD-SNMP-MIB -IR memTotalReal
   - `-m` ... 使用するMIBを指定
   - `+UCD-SNMP-MIB` ... 追加ロードするMIBを明示。
 - `-IR`
-  - `-I` ... 入力のOIDの解釈指定
-  - `R` ... Realaxed (緩い解釈)
-    - `UCD-SNMP-MIB::memTotalReal` ではなく `memTotalReal` で調べられるようになる。
+  - `-I` ... 入力のパースを制御するオプション
+  - `R` ... OIDラベルへアクセスする。（つまりMIBへアクセスする）
+
+### OIDからMIB名を解決する方法
+```bash
+snmptranslate -m +UCD-SNMP-MIB .1.3.6.1.4.1.2021.4.5
+```
 
 ## MIBファイルの位置
 - `/usr/share/snmp/mibs/UCD-SNMP-MIB.txt`
