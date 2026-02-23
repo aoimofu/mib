@@ -126,6 +126,8 @@ snmptranslate -On -m +UCD-SNMP-MIB -IR memTotalReal
   - `R` ... Realaxed (緩い解釈)
     - `UCD-SNMP-MIB::memTotalReal` ではなく `memTotalReal` で調べられるようになる。
 
+## MIBファイルの位置
+- `/usr/share/snmp/mibs/UCD-SNMP-MIB.txt`
 
 # 参考
 - [RedHat 21.7 Net-SNMPを使用したパフォーマンスのモニタリング](https://docs.redhat.com/ja/documentation/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-system_monitoring_tools-net-snmp)
