@@ -1,0 +1,20 @@
+from(bucket: "<INFLUX_BUCKET>")
+  |> range(start: -30m)
+  |> filter(fn: (r) =>
+    r._measurement == "Interface Information" and
+    r.source == "${source}" and
+    (r._field == "ifHCInOctets" or r._field == "ifHCOutOctets")
+  )
+  |> filter(fn: (r) => exists r.ifName and r.ifName != "")
+  |> group(columns: ["source","ifIndex","ifName","_field"])
+  |> sort(columns: ["_time"])
+  |> derivative(unit: 1s, nonNegative: true)
+  |> map(fn: (r) => ({
+      r with
+      _value: float(v: r._value) * 8.0 / 1000.0,   // Kbps
+      _field: if r._field == "ifHCInOctets" then "In" else "Out"
+  }))
+
+// Grafana側設定
+- Units: Kbps
+- Display Name: ${__field.labels.ifName} ${__field.labels._field}
